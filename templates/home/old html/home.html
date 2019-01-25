@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Whatever</title>
+
+    <meta name="description" content="Whatever Phân tích báo cáo tài chính - Tải báo cáo tài chính">
+    <meta name="author" content="Whatever">
+    <link type="image/x-icon" rel="shortcut icon" href="{{url_for('static',filename='images/favicon.ico')}}">
+    
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bokeh-0.12.4.min.css')}}"> 
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/apps.css')}}"> 
+
+
+    <script src="{{url_for('static',filename='js/jquery-3.1.1.min.js')}}" type="text/javascript" ></script>
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}" type="text/javascript" ></script>
+    <script src="{{url_for('static',filename='js/bokeh-0.12.4.min.js')}}" type="text/javascript" ></script>
+    <script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-97460452-1', 'auto');
+	  ga('send', 'pageview');
+
+	</script>
+    
+    {% for script in scripts if scripts != None %}
+    {{ script | safe}}
+    {% endfor %}
+  </head>
+  <body>
+
+    <div class="container-fluid">
+    	<div class="row">
+    		<div class="">
+    			
+    		</div>
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+					 
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="#">Whatever</a>
+				</div>
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><!-- class="active"> -->
+							<a href="#" id='download' style="color:orange;">Download-Financial-Statement</a>
+						</li>
+						
+					</ul>
+					{% from "_formhelpers.html" import render_field %}
+					<form class="navbar-form navbar-left" method="POST" action="{{ url_for('home_app.home')}}" role="form" id="submit_form">
+					 {{ form.hidden_tag() }}
+						 {{ render_field(form.stock_id, class='form-control',placeholder='Enter Stock ID') }}
+						<button type="submit" class="btn btn-default" id = "btn-submit">
+							Submit
+						</button>
+						<!-- form error-->
+						{% if form.stock_id.errors %}
+					    <ul class="text-danger alert alert-info text-center">
+					    {% for error in form.stock_id.errors %}
+					      <li>{{ error }}</li>
+					    {% endfor %}
+					    </ul>
+					  {% endif %}
+					  <!-- don't have data error-->
+					  {% if error != None %}
+					    <ul class="text-danger alert alert-info text-center">
+					      <li>{{ error }}</li>
+					    </ul>
+					  {% endif %}
+					  <!-- flash download error-->
+					  {% with messages = get_flashed_messages() %}
+						  {% if messages %}
+						    <ul class="text-danger alert alert-info text-center">
+						    {% for message in messages %}
+						      <li>{{ message }}</li>
+						    {% endfor %}
+						    </ul>
+						  {% endif %}
+						{% endwith %}
+
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">Action</a>
+								</li>
+								<li>
+									<a href="#">Another action</a>
+								</li>
+								<li>
+									<a href="#">Something else here</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									<a href="#">Separated link</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				
+			</nav>
+		</div>
+			<div class="jumbotron">
+				<h2>
+					Hello, world!
+				</h2>
+				<h5> HOSE, HNX, UPCOME</h5>
+				<p>
+					Wellcome to Lamduy Wedsite :  ))))
+				</p>
+				<p>
+					Chức năng mới sẽ được ra mắt sớm ! 
+				</p>
+				<p>
+					If the company has quarterly report in the current year, the ratios relate to the current Income Statement for the current year will be calculated based on the last four quarters, ratios relate to the current Balance Statement will be Calculated based on the latest quarter
+				</p>
+				<p>
+				Contact: <a href="https://www.facebook.com/bossdl.lam" target="_blank">Visiting my facebook =>> </a>
+				</p>
+				<p>
+					<a class="btn btn-primary btn-large" href="#">Learn more</a>
+				</p>
+			</div>
+			<div class="col-md-12">
+				<div class="row">
+				{% for div in divs if divs != None %}
+					<div class="col-md-6">
+						<p class="text-success">
+							{{div | safe}}
+						</p>
+					</div>
+				{% endfor %}
+				
+				
+				</div>
+			</div>
+			<!--This is a comment. Doan comment facebook======================================================================================-->
+			<div class="row">
+						<div id="fb-root"></div>
+			<script>(function(d, s, id) {
+			  var js, fjs = d.getElementsByTagName(s)[0];
+			  if (d.getElementById(id)) return;
+			  js = d.createElement(s); js.id = id;
+			  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=221846497933492";
+			  fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));</script>
+
+				<div class="col-md-2">
+					
+				</div>
+				<div class="col-md-8">
+					<div id="fb-root"></div>
+					<script>
+					(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.9&appId=328573684227819";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));
+					</script>
+
+					<div class="fb-comments" data-href="http://whatever.vn/" data-width="100%" data-numposts="5"></div>
+				</div>
+
+				<div class="col-md-2">
+					<div class="fb-share-button" data-href="http://whatever.vn/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwhatever.vn%2F&amp;src=sdkpreparse">Chia sẻ</a></div>
+					
+				</div>
+				
+			</div>
+				
+		
+
+	</div>
+</div>
+	<script src="{{url_for('static',filename='js/download.js')}}" type="text/javascript" ></script>
+    
+  </body>
+</html>

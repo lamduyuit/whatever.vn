@@ -1,0 +1,5 @@
+{% block body %}{% endblock %}
+
+---
+The Whatever.vn Team
+{{ config.HOSTNAME }}

@@ -1,0 +1,9 @@
+{% macro render_field(field) %}
+<div class="form-group row d-flex align-items-center">
+  {{ field.label(class_ = "col-sm-6 col-6 col-form-label") }}
+  <div class="col-sm-6 col-6">
+  	{{ field(**kwargs)|safe }}
+  </div>
+  
+</div>
+{% endmacro %}

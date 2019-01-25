@@ -1,0 +1,445 @@
+{% extends "home/home.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	{% block head %}
+  	{{ super() }}
+  	{% endblock %}
+  </head>
+  <body>
+  	{% block navbar %}
+  	{{ super() }}
+  	{% endblock %}
+
+  	{% block noidung %}
+  	<div class="container" id = "FCFE_table">
+  		<!-- ===============================================================Start input_====================================================-->
+  		<div class="row">
+  			{% for df_input in dfs_input if dfs_input != None %}
+  			<div class="col-md-12">
+  				<div class="table-responsive-md">
+  					Phần nội dung
+  					{{df_input | safe}}
+  				</div>
+
+  			</div>
+  			{% endfor %}
+  		</div>
+  		<!-- ===============================================================End input_====================================================-->
+  		{% if first_info_form %}
+  		<!-- ===============================================================Start form_input ====================================================-->
+  		<div class="row">
+			<div class="col-md-12 text-center">
+				<h3> Cac gia dinh dau vao </h3>
+			</div>
+		</div>
+  		<form method="POST" id="submit_form_input">
+	  		<div class="row">
+	  			<div class="col-md-12">
+	  				<div class="row">
+				  		{% from "_formhelpers_input.html" import render_field %}
+			  			{{ first_info_form.hidden_tag() }}
+				  			<div class="col-md-6 d-none">
+				  				{{ render_field(first_info_form.Stock_id_hidden, class = "form-control text-center", value = "000") }}
+				  			</div>
+				  		{% for field in first_info_form if field != None %}
+					  		{% if loop.index > 2 %}
+					  		
+					  			<div class="col-md-6" id = "{{field.name~'_'~(loop.index-1)}}">
+					  				{{ render_field(field, class = "form-control text-center") }}
+					  			</div>
+				  			{% endif %}
+				  		{% endfor %}
+					</div>
+
+			  	</div>
+			  	<div class="col-md-12">
+	  			</div>
+
+	  		</div>
+		</form>
+		{% endif %}
+		<!-- ==============================================================End form_input====================================================-->
+		<div class="accordion" id = "whole-valuation">
+
+			<!-- ==============================================================Start Menu dinh gia====================================================-->
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<ul class="nav nav-pills nav-fill">
+						<li class="nav-item" id = "menu_2_stages">
+							<button type="button" class="btn btn-outline-primary active" data-target = "#collapse_h3_2_stages, #collapse_form_2_stages, #form_2_stages_result_FCFE_FCFF, #form_2_stages_result_row" data-toggle="collapse" aria-expanded="true" aria-controls="collapse_form_2_stages collapse_h3_2_stages form_2_stages_result_FCFE_FCFF form_2_stages_result_row" >Two Stages</button>
+						</li>
+						<li class="nav-item" id = "menu_3_stages">
+							<button type="button" class="btn btn-outline-warning" data-target = "#collapse_h3_3_stages, #collapse_form_3_stages, #form_3_stages_result_FCFE_FCFF, #form_3_stages_result_row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse_h3_3_stages collapse_form_3_stages form_3_stages_result_FCFE_FCFF form_3_stages_result_row" >Three Stages</button>
+						</li>
+						<li class="nav-item" id = "menu_n_stages">
+							<button type="button" class="btn btn-outline-info" data-target = "#collapse_h3_n_stages, #collapse_form_n_stages, #form_n_stages_result_FCFE_FCFF, #form_n_stages_result_row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse_h3_n_stages collapse_form_n_stages form_n_stages_result_FCFE_FCFF form_n_stages_result_row" >N Stages</button>
+						</li>
+						<li class="nav-item" id = "menu_stable_stages">
+							<button type="button" class="btn btn-outline-secondary" data-target = "#collapse_h3_stable_stages, #collapse_form_stable_stages, #form_stable_stages_result_FCFE_FCFF, #form_stable_stages_result_row" data-toggle="collapse" aria-expanded="false" aria-controls="collapse_h3_stable_stages collapse_form_stable_stages form_stable_stages_result_FCFE_FCFF form_stable_stages_result_row" >Stable</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		<!-- ==============================================================End Menu dinh gia====================================================-->
+		
+			<div class="row collapse show" id = "collapse_h3_2_stages" aria-labelledby = "menu_2_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12 text-center">
+					<h3> Mo hinh hai giai doan </h3>
+				</div>
+			</div>
+			<!-- ==============================================================Start form_2_stages====================================================-->
+			<div class="row collapse show" id = "collapse_form_2_stages" aria-labelledby = "menu_2_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<form id = "form_2_stages">
+					{{ form_2_stages_.hidden_tag() }}
+						<div class="row d-none" id="input_hidden_2_stages">
+							{% for field in form_2_stages_ if field != None %}
+								{% if loop.index > 1 and loop.index < 21 %}
+									{{ field(id = field.id ~ "_2_stages") }}
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+									{{ form_2_stages_.type_valuation(class_ = "d-none", value = 2) }}
+								{{ render_field(form_2_stages_.first_stages_n_year, class = "form-control text-center", id =form_2_stages_.first_stages_n_year.id ~ "_2_stages") }}
+							</div>
+							{% for field in form_2_stages_ if field != None %}
+							{% if loop.index >= 23 %}
+							<div class="col-md-6">
+								<div class="form-group row d-flex align-items-center">
+									{{ field.label(class_ = "col-sm-6 col-6 col-form-label") }}
+										<div class="col-sm-6 col-6 text-center">
+											{% for li in field %}
+												<div class="custom-control custom-radio {{ 'pr-1' if loop.index == 1 else '' }}">
+													{{ li(class_ = "custom-control-input " ~field.id ~ "_2_stages") }}
+													{{ li.label(class_ = "custom-control-label ") }}
+												</div>
+											{% endfor %}
+										</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+					  		<div class="col-md-6 d-none">
+						  				<div class="form-group row">
+						  					<div class="col-6">
+						  					</div>
+						  					<div class="col-6">
+						  						<div class="text-center">
+						  						
+						  						</div>
+						  					</div>
+						  				</div>
+						  	</div>
+							<div class="col-md-6 d-none">
+								second
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-outline-success pl-4 pr-4" id="submit_2_stages">Submit</button>
+							</div>
+						</div>
+					
+					</form>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class=" collapse show" id = "form_2_stages_result_FCFE_FCFF" aria-labelledby = "menu_2_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<div class="row mb-3">
+						<div class="col-md-6 my-1">
+							<div class = "row d-flex align-items-center mr-1" id="_2_stages_FCFE">
+							</div>
+						</div>
+						<div class="col-md-6 my-1">
+							<div class="row d-flex align-items-center mr-1" id="_2_stages_FCFF">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<!-- ==============================================================End form_2_stages====================================================-->
+			<!-- ==============================================================Start result form_2_stages====================================================-->
+			<div class="collapse show" id = "form_2_stages_result_row" aria-labelledby = "menu_2_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12" id = "form_2_stages_result">
+				</div>
+			</div>
+			<!-- ==============================================================End result form_2_stages====================================================-->
+
+			<!-- ==============================================================Start form_3_stages====================================================-->
+			<div class="row collapse" id = "collapse_h3_3_stages" aria-labelledby = "menu_3_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12 text-center">
+					<h3> Mo hinh ba giai doan </h3>
+				</div>
+			</div>
+			<div class="row collapse" id = "collapse_form_3_stages" aria-labelledby = "menu_3_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<form id="form_3_stages">
+						{{ form_3_stages_.hidden_tag() }}
+						<div class="row d-none" id="input_hidden_3_stages">
+							{% for field in form_3_stages_ if field != None %}
+								{% if loop.index > 1 and loop.index < 21 %}
+									{{ field(id = field.id ~ "_3_stages") }}
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								{{ form_3_stages_.type_valuation(class_ = "d-none", value = 3) }}
+								{{ render_field(form_3_stages_.first_stages_n_year, class = "form-control text-center", id =form_3_stages_.first_stages_n_year.id ~ "_3_stages") }}
+							</div>
+							<div class="col-md-6">
+								{{ render_field(form_3_stages_.second_stages_n_year, class = "form-control text-center", id =form_3_stages_.second_stages_n_year.id ~ "_3_stages") }}
+							</div>
+							{% for field in form_3_stages_ if field != None %}
+							{% if loop.index >= 24 and loop.index <= 31 %}
+							<div class="col-md-6">
+								<div class="form-group row d-flex align-items-center">
+									{{ field.label(class_ = "col-sm-6 col-6 col-form-label") }}
+										<div class="col-sm-6 col-6 text-center">
+											{% for li in field %}
+												<div class="custom-control custom-radio {{ 'pr-1' if loop.index == 1 else '' }}">
+													{{ li(class_ = "custom-control-input " ~field.id ~ "_3_stages") }}
+													{{ li.label(class_ = "custom-control-label ") }}
+												</div>
+											{% endfor %}
+										</div>
+								</div>
+							</div>
+							{% elif loop.index >=32 %}
+							<div class="col-md-6">
+								{{ render_field(field, class = "form-control text-center", id =field.id ~ "_3_stages") }}
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div class="col-md-6 d-none">
+								<div class="form-group row">
+				  					<div class="col-6">
+				  					</div>
+				  					<div class="col-6">
+				  						<div class="text-center">
+				  							
+				  						</div>
+				  					</div>
+						  		</div>
+							</div>
+							<div class="col-md-6 d-none">
+								Second
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-outline-success pl-4 pr-4" id="submit_3_stages">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<!-- ==============================================================End form_3_stages====================================================-->
+
+			<!-- ==============================================================Start result form_3_stages====================================================-->
+
+			<div class="row collapse" id = "form_3_stages_result_FCFE_FCFF" aria-labelledby = "menu_3_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<div class="row mb-3">
+						<div class="col-md-6 my-1">
+							<div class = "row d-flex align-items-center mr-1" id="_3_stages_FCFE">
+							</div>
+						</div>
+						<div class="col-md-6 my-1">
+							<div class="row d-flex align-items-center mr-1" id="_3_stages_FCFF">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class="row collapse" id = "form_3_stages_result_row" aria-labelledby = "menu_3_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12" id = "form_3_stages_result">
+				</div>
+			</div>
+			<!-- ==============================================================End result form_3_stages====================================================-->
+
+			<!-- ==============================================================Start form_n_stages====================================================-->
+			<div class="row collapse" id = "collapse_h3_n_stages" aria-labelledby = "menu_n_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12 text-center">
+					<h3> Mo hinh gia dinh cong ty ton tai trong n nam </h3>
+				</div>
+			</div>
+			<div class="row collapse" id="collapse_form_n_stages" aria-labelledby = "menu_n_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<form id="form_n_stages">
+						{{ form_n_stages_.hidden_tag() }}
+						<div class="row d-none" id="input_hidden_n_stages">
+							{% for field in form_n_stages_ if field != None %}
+								{% if loop.index > 1 and loop.index < 21 %}
+									{{ field(id = field.id ~ "_n_stages") }}
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="row">
+							<div class="col-md-6 d-none">
+								{{ form_n_stages_.type_valuation(class_ = "d-none", value = 4) }}
+							</div>
+							{% for field in form_n_stages_ if field != None %}
+							{% if loop.index >=22 and loop.index <=24 %}
+							<div class="col-md-6">
+								{{ render_field(field, class = "form-control text-center", id =field.id ~ "_n_stages") }}
+							</div>
+							{% elif loop.index >24 %}
+							<div class="col-md-6">
+								<div class="form-group row d-flex align-items-center">
+									{{ field.label(class_ = "col-sm-6 col-6 col-form-label") }}
+										<div class="col-sm-6 col-6 text-center">
+											{% for li in field %}
+												<div class="custom-control custom-radio {{ 'pr-1' if loop.index == 1 else '' }}">
+													{{ li(class_ = "custom-control-input " ~field.id ~ "_n_stages") }}
+													{{ li.label(class_ = "custom-control-label ") }}
+												</div>
+											{% endfor %}
+										</div>
+								</div>
+							</div>
+							{% endif %}
+							{% endfor %}
+							<div class="col-md-6">
+								<div class="form-group row">
+				  					<div class="col-6">
+				  					</div>
+				  					<div class="col-6">
+				  						<div class="text-center">
+				  							
+				  						</div>
+				  					</div>
+						  		</div>
+							</div>
+							<div class="col-md-6 d-none">
+								Second
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-outline-success pl-4 pr-4" id="submit_n_stages">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<!-- ==============================================================End form_n_stages====================================================-->
+
+			<!-- ==============================================================Start result form_n_stages====================================================-->
+
+			<div class="row collapse" id="form_n_stages_result_FCFE_FCFF" aria-labelledby = "menu_n_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<div class="row mb-3">
+						<div class="col-md-6 my-1">
+							<div class = "row d-flex align-items-center mr-1" id="_n_stages_FCFE">
+							</div>
+						</div>
+						<div class="col-md-6 my-1">
+							<div class="row d-flex align-items-center mr-1" id="_n_stages_FCFF">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class="row collapse" id="form_n_stages_result_row" aria-labelledby = "menu_n_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12" id = "form_n_stages_result">
+				</div>
+			</div>
+			<!-- ==============================================================End result form_n_stages====================================================-->
+	   
+			<!-- ==============================================================Start form_stable====================================================-->
+			<div class="row collapse" id="collapse_h3_stable_stages" aria-labelledby = "menu_stable_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12 text-center">
+					<h3> Mo hinh gia dinh cong ty ton tai vinh vien - 1 giai doan </h3>
+				</div>
+			</div>
+			<div class="row collapse" id="collapse_form_stable_stages" aria-labelledby = "menu_stable_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<form id="form_stable_stages">
+						{{ form_stable_.hidden_tag() }}
+						<div class="row d-none" id="input_hidden_stable_stages">
+							{% for field in form_stable_ if field != None %}
+								{% if loop.index > 1 and loop.index < 21 %}
+									{{ field(id = field.id ~ "_stable_stages") }}
+								{% endif %}
+							{% endfor %}
+						</div>
+						<div class="row">
+							<div class="col-md-6 d-none">
+								{{ form_stable_.type_valuation(class_ = "d-none", value = 5) }}
+							</div>
+							<div class="col-md-6 d-none">
+								<div class="form-group row">
+				  					<div class="col-6">
+				  					</div>
+				  					<div class="col-6">
+				  						<div class="text-center">
+				  							
+				  						</div>
+				  					</div>
+						  		</div>
+							</div>
+							<div class="col-md-6 d-none">
+								Second
+							</div>
+						</div>
+						<div class="row mb-2">
+							<div class="col-md-12 text-center">
+								<button type="button" class="btn btn-outline-success pl-4 pr-4" id="submit_stable_stages">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<!-- ==============================================================End form_stable====================================================-->
+
+			<!-- ==============================================================Start result form_stable====================================================-->
+
+			<div class="row collapse" id="form_stable_stages_result_FCFE_FCFF" aria-labelledby = "menu_stable_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12">
+					<div class="row mb-3">
+						<div class="col-md-6 my-1">
+							<div class = "row d-flex align-items-center" id="_stable_stages_FCFE">
+							</div>
+						</div>
+						<div class="col-md-6 my-1">
+							<div class="row d-flex align-items-center" id="_stable_stages_FCFF">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+				</div>
+			</div>
+			<div class="row collapse" id="form_stable_stages_result_row" aria-labelledby = "menu_stable_stages" data-parent = "#whole-valuation">
+				<div class="col-md-12" id = "form_stable_stages_result">
+				</div>
+			</div>
+		</div>
+		<!-- ==============================================================End result form_stable====================================================-->
+	</div>
+  	{% endblock %}
+
+
+  	{% block footer %}
+  	{{ super() }}
+  	{% endblock %}
+  </body>
+</html>

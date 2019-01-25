@@ -1,0 +1,32 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+li {
+    display: inline;
+}
+.tmp-button {
+	margin-right: 0 !important;
+}
+.tmp-fade {
+	margin-bottom: 0 !important;
+	padding: 0.5rem !important;
+}
+li {
+	margin-top: 5px;
+}
+.nav-fill button {
+	width: 90%;
+}
+
+#error_large_view{
+	position: absolute;
+    left: 32%;
+    top: 88%;
+}
+
+footer {
+	/*background-image: url("/static/images/1.jpg"); */
+	background-color: #f8f9fa;
+	color: black;
+}
