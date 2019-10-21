@@ -76,7 +76,7 @@ URLObject==2.4.3
 uuid==1.30
 Wand==0.4.2
 wcwidth==0.1.7
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 win-inet-pton==1.0.1
 win-unicode-console==0.5
 wincertstore==0.2
