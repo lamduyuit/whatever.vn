@@ -71,7 +71,7 @@ SQLAlchemy==1.2.15
 SQLAlchemy-Utils==0.33.10
 tornado==4.4.2
 traitlets==4.3.2
-urllib3==1.23
+urllib3==1.26.5
 URLObject==2.4.3
 uuid==1.30
 Wand==0.4.2
