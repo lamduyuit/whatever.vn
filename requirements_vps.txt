@@ -55,7 +55,7 @@ pickleshare==0.7.5
 prompt-toolkit==2.0.7
 pycparser==2.19
 Pygments==2.3.1
-PyJWT==1.7.1
+PyJWT==2.4.0
 pymongo==2.8
 pyOpenSSL==18.0.0
 pyparsing==2.2.0
