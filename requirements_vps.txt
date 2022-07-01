@@ -47,7 +47,7 @@ mongoengine==0.8.0
 numpy==1.11.2
 oauth2==1.9.0.post1
 oauthlib==2.1.0
-openpyxl==2.4.1
+openpyxl==2.4.2
 packaging==16.8
 pandas==0.23.4
 parso==0.3.1
